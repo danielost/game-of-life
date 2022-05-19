@@ -1,18 +1,28 @@
-let n = 7;
+let canvasWidth = 1000;
+let canvas = document.getElementById("field");
+let ctx = canvas.getContext("2d");
+
+let ratio = 20;
+let n = canvasWidth / ratio;
 let field = new Array(n);
 let states = ["dead", "alive"]
 
 for (let i = 0; i < n; i++) {
     field[i] = new Array(n);
     for (let j = 0; j < n; j++) {
-        field[i][j] = states[0];
+        if (Math.floor(Math.random() * 100000) % 2 == 0) {
+            field[i][j] = states[1];
+            ctx.beginPath();
+            ctx.rect(j * ratio, i * ratio, ratio, ratio);
+            ctx.fillStyle = "black";
+            ctx.fill();
+        }
+        else {
+            field[i][j] = states[0];
+        }
     }
 }
 
-field[1][1]=states[1];
-field[1][2]=states[1];
-field[2][1]=states[1];
-field[3][2]=states[1];
 drawField(field, states);
 
 let times = 5;
@@ -40,17 +50,19 @@ while (times > 0) {
 }
 
 function drawField(field, states) {
-    for (let i = 0; i < field.length; i++) {
-        for (let j = 0; j < field.length; j++) {
-            if (field[i][j] == states[1]) {
-                process.stdout.write("*");
-            }
-            else {
-                process.stdout.write(".");
-            }
-        }
-        console.log("\n");
-    }
+    // for (let i = 0; i < field.length; i++) {
+    //     for (let j = 0; j < field.length; j++) {
+    //         if (field[i][j] == states[1]) {
+    //             process.stdout.write("*");
+    //         }
+    //         else {
+    //             process.stdout.write(".");
+    //         }
+    //     }
+    //     console.log("\n");
+    // }
+    console.table(field);
+
     console.log("\n");
     console.log("\n");
 }
