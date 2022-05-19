@@ -1,4 +1,4 @@
-let n = 4;
+let n = 7;
 let field = new Array(n);
 let states = ["dead", "alive"]
 
@@ -9,30 +9,39 @@ for (let i = 0; i < n; i++) {
     }
 }
 
-
-
-
 field[1][1]=states[1];
 field[1][2]=states[1];
 field[2][1]=states[1];
 field[3][2]=states[1];
-
-
 drawField(field, states);
 
-// console.log("abc");
-// console.log("aasfasg");
-
-// for (let i = 0; i < n; i++) {
-//     for (let j = 0; j < n; j++) {
-//         console.log(i + " " + j + ": " + neighboursAmount(field, states, i, j) + "\n");
-//     }
-//     console.log("\n");
-// }
-
-async function drawField(field, states) {
+let times = 5;
+while (times > 0) {
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < n; j++) {
+            let neighbours = neighboursAmount(field, states, i, j);
+            if (field[i][j] == states[1] && (neighbours.length == 2 || neighbours.length == 3)) {
+                continue;
+            }
+            if (field[i][j] == states[0] && neighbours.length == 3) {
+                field[i][j] = states[1];
+                for (let k = 0; k < neighbours.length; k++) {
+                    let spot = neighbours[k];
+                    field[spot[0]][spot[1]] = states[0];
+                }
+            }
+            else {
+                field[i][j] = states[0];
+            }
+        }
+    }
+    drawField(field, states);
+    times--;
+}
+
+function drawField(field, states) {
+    for (let i = 0; i < field.length; i++) {
+        for (let j = 0; j < field.length; j++) {
             if (field[i][j] == states[1]) {
                 process.stdout.write("*");
             }
@@ -42,8 +51,8 @@ async function drawField(field, states) {
         }
         console.log("\n");
     }
-    // await new Promise(r => setTimeout(r, 250));
-    // console.clear();
+    console.log("\n");
+    console.log("\n");
 }
 
 function neighboursAmount(array, states, i, j) {
