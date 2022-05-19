@@ -9,16 +9,41 @@ for (let i = 0; i < n; i++) {
     }
 }
 
+
+
+
 field[1][1]=states[1];
 field[1][2]=states[1];
 field[2][1]=states[1];
 field[3][2]=states[1];
 
-for (let i = 0; i < n; i++) {
-    for (let j = 0; j < n; j++) {
-        console.log(i + " " + j + ": " + neighboursAmount(field, states, i, j) + "\n");
+
+drawField(field, states);
+
+// console.log("abc");
+// console.log("aasfasg");
+
+// for (let i = 0; i < n; i++) {
+//     for (let j = 0; j < n; j++) {
+//         console.log(i + " " + j + ": " + neighboursAmount(field, states, i, j) + "\n");
+//     }
+//     console.log("\n");
+// }
+
+async function drawField(field, states) {
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            if (field[i][j] == states[1]) {
+                process.stdout.write("*");
+            }
+            else {
+                process.stdout.write(".");
+            }
+        }
+        console.log("\n");
     }
-    console.log("\n");
+    // await new Promise(r => setTimeout(r, 250));
+    // console.clear();
 }
 
 function neighboursAmount(array, states, i, j) {
