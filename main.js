@@ -1,32 +1,27 @@
 let canvasWidth = 1000;
-let canvas = document.getElementById("field");
-let ctx = canvas.getContext("2d");
-
-let ratio = 20;
-let n = canvasWidth / ratio;
+let ratio = 12;
+let n = Math.floor(canvasWidth / ratio);
 let field = new Array(n);
 let states = ["dead", "alive"]
+let cells = 0;
 
 for (let i = 0; i < n; i++) {
     field[i] = new Array(n);
     for (let j = 0; j < n; j++) {
         if (Math.floor(Math.random() * 100000) % 2 == 0) {
             field[i][j] = states[1];
-            ctx.beginPath();
-            ctx.rect(j * ratio, i * ratio, ratio, ratio);
-            ctx.fillStyle = "black";
-            ctx.fill();
+            cells++;
         }
         else {
             field[i][j] = states[0];
         }
     }
 }
+console.log(cells);
 
-drawField(field, states);
+setInterval(loop, 100);
 
-let times = 5;
-while (times > 0) {
+function loop() {
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < n; j++) {
             let neighbours = neighboursAmount(field, states, i, j);
@@ -35,36 +30,46 @@ while (times > 0) {
             }
             if (field[i][j] == states[0] && neighbours.length == 3) {
                 field[i][j] = states[1];
-                for (let k = 0; k < neighbours.length; k++) {
-                    let spot = neighbours[k];
-                    field[spot[0]][spot[1]] = states[0];
-                }
+                cells += 1;
+                // for (let k = 0; k < neighbours.length; k++) {
+                //     cells -= 1;
+                //     let spot = neighbours[k];
+                //     field[spot[0]][spot[1]] = states[0];
+                // }
             }
             else {
+                if (field[i][j] == states[1]) {
+                    cells -= 1;
+                }
                 field[i][j] = states[0];
             }
+            
         }
     }
+    console.log("call");
+    console.log(cells);
     drawField(field, states);
-    times--;
 }
 
 function drawField(field, states) {
-    // for (let i = 0; i < field.length; i++) {
-    //     for (let j = 0; j < field.length; j++) {
-    //         if (field[i][j] == states[1]) {
-    //             process.stdout.write("*");
-    //         }
-    //         else {
-    //             process.stdout.write(".");
-    //         }
-    //     }
-    //     console.log("\n");
-    // }
-    console.table(field);
-
-    console.log("\n");
-    console.log("\n");
+    let canvas = document.getElementById("field");
+    let ctx = canvas.getContext("2d");
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            if (field[i][j] == states[1]) {
+                ctx.beginPath();
+                ctx.rect(j * ratio, i * ratio, ratio, ratio);
+                ctx.fillStyle = "black";
+                ctx.fill();
+            }
+            else {
+                ctx.beginPath();
+                ctx.rect(j * ratio, i * ratio, ratio, ratio);
+                ctx.fillStyle = "white";
+                ctx.fill();
+            }
+        }
+    }
 }
 
 function neighboursAmount(array, states, i, j) {
