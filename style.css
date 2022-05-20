@@ -1,0 +1,25 @@
+body {
+    background-color: rgb(10, 0, 60);
+}
+
+.header {
+    color: gainsboro;
+    font-size: 35px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+
+.main {
+    margin: 0 auto;
+    width: 600px;
+    padding: 10px;
+    text-align: center;
+}
+
+#population {
+    color: gainsboro;
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}

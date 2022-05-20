@@ -4,10 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+    <title>Game of Life</title>
 </head>
 <body>
-    <canvas id="field" width="1000" height="1000" color="red"></canvas>
+    <div class="header">GAME OF LIFE</div>
+    <div class="main">
+        <canvas id="field" width="600" height="600" color="red"></canvas>
+        <div id="population">pop</div>
+    </div>
     <script type="text/javascript" src="main.js"></script>
 </body>
 </html>
