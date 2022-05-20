@@ -1,36 +1,37 @@
-let canvasWidth = 1000;
+const CANVAS_WIDTH = 1000;
 let ratio = 12;
-let n = Math.floor(canvasWidth / ratio);
+let n = Math.floor(CANVAS_WIDTH / ratio);
 let field = new Array(n);
-let states = ["dead", "alive"]
-let cells = 0;
+let states = ["dead", "alive"];
 
 for (let i = 0; i < n; i++) {
     field[i] = new Array(n);
     for (let j = 0; j < n; j++) {
         if (Math.floor(Math.random() * 100000) % 2 == 0) {
             field[i][j] = states[1];
-            cells++;
         }
         else {
             field[i][j] = states[0];
         }
     }
 }
-console.log(cells);
 
 setInterval(loop, 100);
+// loop();
 
 function loop() {
+    let nextGen = new Array(n);
     for (let i = 0; i < n; i++) {
+        nextGen[i] = new Array(n);
         for (let j = 0; j < n; j++) {
             let neighbours = neighboursAmount(field, states, i, j);
             if (field[i][j] == states[1] && (neighbours.length == 2 || neighbours.length == 3)) {
+                nextGen[i][j] = field[i][j];
                 continue;
             }
             if (field[i][j] == states[0] && neighbours.length == 3) {
-                field[i][j] = states[1];
-                cells += 1;
+                // field[i][j] = states[1];
+                nextGen[i][j] = states[1];
                 // for (let k = 0; k < neighbours.length; k++) {
                 //     cells -= 1;
                 //     let spot = neighbours[k];
@@ -38,16 +39,14 @@ function loop() {
                 // }
             }
             else {
-                if (field[i][j] == states[1]) {
-                    cells -= 1;
-                }
-                field[i][j] = states[0];
+                nextGen[i][j] = states[0];
+                // field[i][j] = states[0];               
             }
             
         }
     }
     console.log("call");
-    console.log(cells);
+    field = nextGen;
     drawField(field, states);
 }
 
